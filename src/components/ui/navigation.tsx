@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
-import mrhLogo from "@/assets/mrh-logo.png";
 
 const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -21,16 +20,10 @@ const Navigation = () => {
           {/* Logo */}
           <div className="flex items-center space-x-3">
             <img 
-              src={mrhLogo} 
+              src="/lovable-uploads/727f7dba-5a7f-4097-884d-e20de561db35.png" 
               alt="MRH Logo" 
-              className="h-10 w-10 rounded-full"
+              className="h-12 w-auto"
             />
-            <div>
-              <h1 className="text-xl font-bold text-primary">MRH do Bem</h1>
-              <p className="text-xs text-muted-foreground hidden sm:block">
-                Movimento Rodoviário Humanitário
-              </p>
-            </div>
           </div>
 
           {/* Desktop Navigation */}

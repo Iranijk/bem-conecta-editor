@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Heart, Users } from "lucide-react";
 import heroImage from "@/assets/mrh-hero-bg.jpg";
-import mrhLogo from "@/assets/mrh-logo.png";
 
 const HeroSection = () => {
   return (
@@ -19,11 +18,11 @@ const HeroSection = () => {
         {/* Logo */}
         <div className="mb-8 flex justify-center">
           <div className="relative">
-            <div className="absolute inset-0 bg-primary/20 rounded-full blur-2xl scale-150 animate-pulse"></div>
+            <div className="absolute inset-0 bg-primary/20 blur-2xl scale-150 animate-pulse"></div>
             <img 
-              src={mrhLogo} 
+              src="/lovable-uploads/727f7dba-5a7f-4097-884d-e20de561db35.png" 
               alt="MRH do Bem Logo" 
-              className="relative h-24 w-24 md:h-32 md:w-32 rounded-full shadow-hero mx-auto"
+              className="relative h-32 w-auto md:h-48 md:w-auto shadow-hero mx-auto"
             />
           </div>
         </div>
