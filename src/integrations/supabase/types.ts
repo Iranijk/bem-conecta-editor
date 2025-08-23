@@ -14,7 +14,171 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      freights: {
+        Row: {
+          cargo_type: string
+          contact_email: string | null
+          contact_phone: string | null
+          created_at: string
+          departure_date: string | null
+          description: string | null
+          destination_city: string
+          id: string
+          is_active: boolean | null
+          origin_city: string
+          price: number | null
+          title: string
+          updated_at: string
+          user_id: string
+          vehicle_type: string | null
+          weight: number | null
+        }
+        Insert: {
+          cargo_type: string
+          contact_email?: string | null
+          contact_phone?: string | null
+          created_at?: string
+          departure_date?: string | null
+          description?: string | null
+          destination_city: string
+          id?: string
+          is_active?: boolean | null
+          origin_city: string
+          price?: number | null
+          title: string
+          updated_at?: string
+          user_id: string
+          vehicle_type?: string | null
+          weight?: number | null
+        }
+        Update: {
+          cargo_type?: string
+          contact_email?: string | null
+          contact_phone?: string | null
+          created_at?: string
+          departure_date?: string | null
+          description?: string | null
+          destination_city?: string
+          id?: string
+          is_active?: boolean | null
+          origin_city?: string
+          price?: number | null
+          title?: string
+          updated_at?: string
+          user_id?: string
+          vehicle_type?: string | null
+          weight?: number | null
+        }
+        Relationships: []
+      }
+      jobs: {
+        Row: {
+          company_name: string
+          contact_email: string | null
+          contact_phone: string | null
+          created_at: string
+          description: string | null
+          id: string
+          is_active: boolean | null
+          job_type: string
+          location: string
+          requirements: string | null
+          salary_max: number | null
+          salary_min: number | null
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          company_name: string
+          contact_email?: string | null
+          contact_phone?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_active?: boolean | null
+          job_type: string
+          location: string
+          requirements?: string | null
+          salary_max?: number | null
+          salary_min?: number | null
+          title: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          company_name?: string
+          contact_email?: string | null
+          contact_phone?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_active?: boolean | null
+          job_type?: string
+          location?: string
+          requirements?: string | null
+          salary_max?: number | null
+          salary_min?: number | null
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      vehicles: {
+        Row: {
+          brand: string
+          contact_email: string | null
+          contact_phone: string | null
+          created_at: string
+          description: string | null
+          id: string
+          images: string[] | null
+          is_active: boolean | null
+          location: string | null
+          model: string
+          price: number | null
+          title: string
+          updated_at: string
+          user_id: string
+          year: number
+        }
+        Insert: {
+          brand: string
+          contact_email?: string | null
+          contact_phone?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          images?: string[] | null
+          is_active?: boolean | null
+          location?: string | null
+          model: string
+          price?: number | null
+          title: string
+          updated_at?: string
+          user_id: string
+          year: number
+        }
+        Update: {
+          brand?: string
+          contact_email?: string | null
+          contact_phone?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          images?: string[] | null
+          is_active?: boolean | null
+          location?: string | null
+          model?: string
+          price?: number | null
+          title?: string
+          updated_at?: string
+          user_id?: string
+          year?: number
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
