@@ -6,8 +6,8 @@ const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const navItems = [
-    { name: "Início", href: "#inicio" },
-    { name: "Classificados", href: "#classificados" },
+    { name: "Início", href: "/" },
+    { name: "Classificados", href: "/classificados" },
     { name: "Marketplace", href: "#marketplace" },
     { name: "Sobre Nós", href: "#sobre" },
     { name: "Contato", href: "#contato" },
