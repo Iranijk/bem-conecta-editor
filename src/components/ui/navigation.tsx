@@ -9,8 +9,7 @@ const Navigation = () => {
     { name: "Início", href: "/" },
     { name: "Classificados", href: "/classificados" },
     { name: "Sobre Nós", href: "/sobre" },
-    { name: "Marketplace", href: "#marketplace" },
-    { name: "Contato", href: "#contato" },
+    { name: "Blog / Notícias", href: "/blog" },
   ];
 
   return (
@@ -41,11 +40,11 @@ const Navigation = () => {
 
           {/* Action Buttons */}
           <div className="hidden md:flex items-center space-x-4">
-            <Button variant="outline" size="sm">
-              Seja Voluntário
+            <Button variant="outline" size="sm" asChild>
+              <a href="/voluntario">Seja Voluntário</a>
             </Button>
-            <Button variant="default" size="sm">
-              Doe Agora
+            <Button variant="default" size="sm" asChild>
+              <a href="/voluntario">Doe Agora</a>
             </Button>
           </div>
 
@@ -75,11 +74,11 @@ const Navigation = () => {
                 </a>
               ))}
               <div className="flex flex-col space-y-2 pt-4">
-                <Button variant="outline" size="sm">
-                  Seja Voluntário
+                <Button variant="outline" size="sm" asChild>
+                  <a href="/voluntario">Seja Voluntário</a>
                 </Button>
-                <Button variant="default" size="sm">
-                  Doe Agora
+                <Button variant="default" size="sm" asChild>
+                  <a href="/voluntario">Doe Agora</a>
                 </Button>
               </div>
             </div>
