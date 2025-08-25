@@ -253,7 +253,14 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      mask_email: {
+        Args: { email_address: string }
+        Returns: string
+      }
+      mask_phone: {
+        Args: { phone_number: string }
+        Returns: string
+      }
     }
     Enums: {
       [_ in never]: never
