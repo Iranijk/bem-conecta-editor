@@ -4,7 +4,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Edit2, Trash2, Phone, Mail, MapPin, Calendar, Building2, Briefcase, Loader2 } from "lucide-react";
+import { Edit2, Trash2, Phone, Mail, MapPin, Calendar, Building2, Briefcase, Loader2, Lock } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { ptBR } from "date-fns/locale";
 
@@ -30,10 +30,15 @@ interface JobsListProps {
 const JobsList = ({ onEdit }: JobsListProps) => {
   const [jobs, setJobs] = useState<Job[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [user, setUser] = useState(null);
   const { toast } = useToast();
 
   useEffect(() => {
     loadJobs();
+    // Check authentication status
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      setUser(user);
+    });
   }, []);
 
   const loadJobs = async () => {
@@ -196,16 +201,25 @@ const JobsList = ({ onEdit }: JobsListProps) => {
               )}
 
               <div className="flex flex-wrap gap-4 text-sm">
-                {job.contact_phone && (
+                {user ? (
+                  <>
+                    {job.contact_phone && (
+                      <div className="flex items-center text-muted-foreground">
+                        <Phone className="h-4 w-4 mr-1" />
+                        {job.contact_phone}
+                      </div>
+                    )}
+                    {job.contact_email && (
+                      <div className="flex items-center text-muted-foreground">
+                        <Mail className="h-4 w-4 mr-1" />
+                        {job.contact_email}
+                      </div>
+                    )}
+                  </>
+                ) : (
                   <div className="flex items-center text-muted-foreground">
-                    <Phone className="h-4 w-4 mr-1" />
-                    {job.contact_phone}
-                  </div>
-                )}
-                {job.contact_email && (
-                  <div className="flex items-center text-muted-foreground">
-                    <Mail className="h-4 w-4 mr-1" />
-                    {job.contact_email}
+                    <Lock className="h-4 w-4 mr-1" />
+                    <span className="text-sm">Faça login para ver contatos</span>
                   </div>
                 )}
               </div>

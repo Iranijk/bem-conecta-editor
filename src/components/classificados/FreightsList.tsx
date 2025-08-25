@@ -4,7 +4,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Edit2, Trash2, Phone, Mail, MapPin, Calendar, Truck, Package, Loader2 } from "lucide-react";
+import { Edit2, Trash2, Phone, Mail, MapPin, Calendar, Truck, Package, Loader2, Lock } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { ptBR } from "date-fns/locale";
 
@@ -31,10 +31,15 @@ interface FreightsListProps {
 const FreightsList = ({ onEdit }: FreightsListProps) => {
   const [freights, setFreights] = useState<Freight[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [user, setUser] = useState(null);
   const { toast } = useToast();
 
   useEffect(() => {
     loadFreights();
+    // Check authentication status
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      setUser(user);
+    });
   }, []);
 
   const loadFreights = async () => {
@@ -197,16 +202,25 @@ const FreightsList = ({ onEdit }: FreightsListProps) => {
               )}
 
               <div className="flex flex-wrap gap-4 text-sm">
-                {freight.contact_phone && (
+                {user ? (
+                  <>
+                    {freight.contact_phone && (
+                      <div className="flex items-center text-muted-foreground">
+                        <Phone className="h-4 w-4 mr-1" />
+                        {freight.contact_phone}
+                      </div>
+                    )}
+                    {freight.contact_email && (
+                      <div className="flex items-center text-muted-foreground">
+                        <Mail className="h-4 w-4 mr-1" />
+                        {freight.contact_email}
+                      </div>
+                    )}
+                  </>
+                ) : (
                   <div className="flex items-center text-muted-foreground">
-                    <Phone className="h-4 w-4 mr-1" />
-                    {freight.contact_phone}
-                  </div>
-                )}
-                {freight.contact_email && (
-                  <div className="flex items-center text-muted-foreground">
-                    <Mail className="h-4 w-4 mr-1" />
-                    {freight.contact_email}
+                    <Lock className="h-4 w-4 mr-1" />
+                    <span className="text-sm">Faça login para ver contatos</span>
                   </div>
                 )}
               </div>
