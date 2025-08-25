@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Menu, X } from "lucide-react";
+import { Menu, X, User, LogOut } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
 
 const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { user, signOut } = useAuth();
 
   const navItems = [
     { name: "Início", href: "/" },
@@ -11,6 +13,11 @@ const Navigation = () => {
     { name: "Sobre Nós", href: "/sobre" },
     { name: "Blog / Notícias", href: "/blog" },
   ];
+
+  const handleSignOut = async () => {
+    await signOut();
+    setIsMenuOpen(false);
+  };
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-md border-b border-border">
@@ -40,12 +47,30 @@ const Navigation = () => {
 
           {/* Action Buttons */}
           <div className="hidden md:flex items-center space-x-4">
-            <Button variant="outline" size="sm" asChild>
-              <a href="/voluntario">Seja Voluntário</a>
-            </Button>
-            <Button variant="default" size="sm" asChild>
-              <a href="/voluntario">Doe Agora</a>
-            </Button>
+            {user ? (
+              <div className="flex items-center space-x-4">
+                <div className="flex items-center space-x-2 text-sm text-muted-foreground">
+                  <User className="h-4 w-4" />
+                  <span>Olá, {user.email}</span>
+                </div>
+                <Button variant="outline" size="sm" onClick={handleSignOut}>
+                  <LogOut className="h-4 w-4 mr-2" />
+                  Sair
+                </Button>
+              </div>
+            ) : (
+              <>
+                <Button variant="outline" size="sm" asChild>
+                  <a href="/voluntario">Seja Voluntário</a>
+                </Button>
+                <Button variant="outline" size="sm" asChild>
+                  <a href="/auth">Entrar</a>
+                </Button>
+                <Button variant="default" size="sm" asChild>
+                  <a href="/voluntario">Doe Agora</a>
+                </Button>
+              </>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -74,12 +99,30 @@ const Navigation = () => {
                 </a>
               ))}
               <div className="flex flex-col space-y-2 pt-4">
-                <Button variant="outline" size="sm" asChild>
-                  <a href="/voluntario">Seja Voluntário</a>
-                </Button>
-                <Button variant="default" size="sm" asChild>
-                  <a href="/voluntario">Doe Agora</a>
-                </Button>
+                {user ? (
+                  <div className="space-y-2">
+                    <div className="flex items-center space-x-2 text-sm text-muted-foreground py-2">
+                      <User className="h-4 w-4" />
+                      <span>Olá, {user.email}</span>
+                    </div>
+                    <Button variant="outline" size="sm" onClick={handleSignOut}>
+                      <LogOut className="h-4 w-4 mr-2" />
+                      Sair
+                    </Button>
+                  </div>
+                ) : (
+                  <>
+                    <Button variant="outline" size="sm" asChild>
+                      <a href="/voluntario">Seja Voluntário</a>
+                    </Button>
+                    <Button variant="outline" size="sm" asChild>
+                      <a href="/auth">Entrar</a>
+                    </Button>
+                    <Button variant="default" size="sm" asChild>
+                      <a href="/voluntario">Doe Agora</a>
+                    </Button>
+                  </>
+                )}
               </div>
             </div>
           </div>

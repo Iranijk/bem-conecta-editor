@@ -1,9 +1,12 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Navigation from "@/components/ui/navigation";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
+import { Plus, AlertCircle } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import ProfileForm from "@/components/ProfileForm";
 import VehicleForm from "@/components/classificados/VehicleForm";
 import FreightForm from "@/components/classificados/FreightForm";
 import JobForm from "@/components/classificados/JobForm";
@@ -17,8 +20,31 @@ const Classificados = () => {
     type: "vehicle" | "freight" | "job" | null;
     editId?: string;
   }>({ type: null });
+  const [showProfileForm, setShowProfileForm] = useState(false);
+  
+  const { user, profile, loading } = useAuth();
+
+  useEffect(() => {
+    // Se não há usuário logado, não precisa verificar perfil
+    if (!user || loading) return;
+    
+    // Se há usuário mas não há perfil ou perfil não tem dados básicos
+    if (!profile || !profile.full_name) {
+      setShowProfileForm(true);
+    }
+  }, [user, profile, loading]);
 
   const handleNewClick = (type: "vehicle" | "freight" | "job") => {
+    if (!user) {
+      window.location.href = '/auth';
+      return;
+    }
+
+    if (!profile || !profile.full_name) {
+      setShowProfileForm(true);
+      return;
+    }
+
     setShowForm({ type });
   };
 
@@ -30,6 +56,47 @@ const Classificados = () => {
     setShowForm({ type: null });
   };
 
+  const handleProfileComplete = () => {
+    setShowProfileForm(false);
+  };
+
+  if (loading) {
+    return (
+      <main className="min-h-screen bg-background">
+        <Navigation />
+        <div className="container mx-auto px-4 py-20">
+          <div className="flex items-center justify-center">
+            <div className="text-center">
+              <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-primary mx-auto"></div>
+              <p className="mt-4 text-muted-foreground">Carregando...</p>
+            </div>
+          </div>
+        </div>
+      </main>
+    );
+  }
+
+  if (showProfileForm) {
+    return (
+      <main className="min-h-screen bg-background">
+        <Navigation />
+        
+        <div className="container mx-auto px-4 py-20">
+          <div className="max-w-2xl mx-auto">
+            <Alert className="mb-6">
+              <AlertCircle className="h-4 w-4" />
+              <AlertDescription>
+                Complete seu perfil para criar classificados
+              </AlertDescription>
+            </Alert>
+            
+            <ProfileForm onComplete={handleProfileComplete} />
+          </div>
+        </div>
+      </main>
+    );
+  }
+
   return (
     <main className="min-h-screen bg-background">
       <Navigation />
@@ -40,6 +107,17 @@ const Classificados = () => {
           <p className="text-muted-foreground">
             Cadastre e gerencie seus anúncios de veículos, fretes e empregos
           </p>
+          
+          {!user && (
+            <Alert className="mt-4">
+              <AlertCircle className="h-4 w-4" />
+              <AlertDescription>
+                <a href="/auth" className="text-primary hover:underline">
+                  Faça login
+                </a> para criar novos classificados
+              </AlertDescription>
+            </Alert>
+          )}
         </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
